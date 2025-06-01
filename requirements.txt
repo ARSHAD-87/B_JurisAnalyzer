@@ -5,3 +5,9 @@ python-docx
 nltk
 numpy
 reportlab
+django
+gunicorn
+psycopg2-binary
+dj-database-url
+django-cors-headers
+whitenoise
