@@ -1,0 +1,7 @@
+transformers
+torch
+PyPDF2
+python-docx
+nltk
+numpy
+reportlab
