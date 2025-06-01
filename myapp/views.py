@@ -8,11 +8,11 @@ from .BERT import handle_uploaded_file
 
 
 # Create your views here.
-# Function to render the index page
+
 def index(request):
     return render(request, 'index.html')
 
-# Function to handle user signup
+
 @csrf_exempt
 def sign_up(request):
     if request.method == "POST":
@@ -32,7 +32,7 @@ def sign_up(request):
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON"}, status=400)
     return JsonResponse({"error": "Invalid request method"}, status=405)
-# Function to handle user sign-in
+
 @csrf_exempt
 def signin(request):
     if request.method == 'POST':
@@ -47,7 +47,7 @@ def signin(request):
             return JsonResponse({'error': 'Invalid email or password'}, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
-# Function to handle file upload and analysis
+
 @csrf_exempt
 def upload_file(request):
     if request.method == "POST" and request.FILES.get("file"):

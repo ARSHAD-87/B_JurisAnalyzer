@@ -1,4 +1,3 @@
-# Import necessary libraries
 from transformers import BertTokenizer, BertModel
 import torch
 import PyPDF2
@@ -6,9 +5,6 @@ from docx import Document as DocxDocument
 import nltk
 from nltk.tokenize import sent_tokenize
 import numpy as np
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from reportlab.lib.utils import simpleSplit
 import os
 
 # Download required NLTK data at runtime if not already present
@@ -24,7 +20,7 @@ except LookupError:
 # Load pre-trained BERT model and tokenizer
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 model = BertModel.from_pretrained('bert-base-uncased')
-# Extract text from the document
+
 def extract_text(file_path):
     if file_path.endswith('.pdf'):
         with open(file_path, 'rb') as file:
@@ -37,12 +33,12 @@ def extract_text(file_path):
         with open(file_path, 'r') as file:
             text = file.read()
     return text
-# Function to analyze the document
+
 def analyze_document(file_path):
     text = extract_text(file_path)
     summary, risks = analyze_document_text(text)
     return summary, risks
-# Function to analyze the text and extract summary and risks
+
 def analyze_document_text(text, summary_sentences=100, risk_keywords=None):
     if not text or not isinstance(text, str):
         return "Error: Invalid input text", "No risks analyzed"
@@ -93,7 +89,7 @@ def analyze_document_text(text, summary_sentences=100, risk_keywords=None):
 
     return summary, risks
 
-# Function to handle the uploaded file
+
 def handle_uploaded_file(file_path):
     # Process the file and generate summary and risks
     summary, risks = analyze_document(file_path)
@@ -114,7 +110,12 @@ def handle_uploaded_file(file_path):
         "risks": formatted_risks,
         "pdf_file": pdf_file_path  # Return the path to the generated PDF
     }
-# Function to generate a PDF report
+    
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib.utils import simpleSplit
+import os
+
 def generate_pdf(summary, risks):
     # Define the output PDF file path
     pdf_file_path = os.path.join("outputs", "analysis_result.pdf")
